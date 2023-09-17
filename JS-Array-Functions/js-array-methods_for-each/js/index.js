@@ -22,9 +22,7 @@ const colors = [
 colors.forEach((color)=>{ 
   const colorElement = document.createElement('div')
   colorElement.className = 'color-box'
-  
-  document.body.style.backgroundColor = colors[5];
-
+  colorElement.style.backgroundColor = color;
   document.body.append(colorElement);
   console.log( color);
 });
@@ -32,6 +30,7 @@ colors.forEach((color)=>{
 function renderColorBox(){
   const colorElement = document.createElement('div')
   colorElement.className = 'color-box'
+  // colorElement.style.backgroundColor = color
   document.body.append(colorElement)
 }
 
