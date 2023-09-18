@@ -38,7 +38,7 @@ const recipes = [
 const onlyTitles = recipes.map((recipe) => {
   return (recipe.title)
 })
-console.log(onlyTitles);
+console.log('Only Titles: ',onlyTitles);
  // ['Crepes', ...]
 
 const titlesWithDuration = recipes.map((recipe) => {
@@ -46,13 +46,13 @@ const titlesWithDuration = recipes.map((recipe) => {
   const duration = recipe.duration
   return (`${title} (${duration}min)`)
 });
-console.log(titlesWithDuration);
+console.log('Titel with Duration :',titlesWithDuration);
  // ['Crepes (60min)', ...]
 
 const timePerServing = recipes.map((recipe) => {
   return ( recipe.duration / recipe.servings)
 });
-console.log(timePerServing) 
+console.log('Time per Serving: ',timePerServing) 
 // [20, 10, 432, 12]
 
 // EXTRA:
@@ -60,13 +60,7 @@ console.log(timePerServing)
 // HINT: use first map() and then Array.prototype.join() with "method chaining" like so:
 // myArray.map(...).join(', ');
 
-const allTitlesInOneString = recipes.map((recipe) => {
-  const recipesToString = [recipe.title]
-  Array.prototype.join(recipesToString)
-  return( myArray.map(...).join(', '))
-
-}); 
-console.log(allTitlesInOneString);// 'Crepes, Scrambled Eggs, ...'
+// 'Crepes, Scrambled Eggs, ...'
 
 // For more information how to join an array,
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join#joining_an_array_four_different_ways
@@ -75,8 +69,11 @@ console.log(allTitlesInOneString);// 'Crepes, Scrambled Eggs, ...'
  2: `filter` exercises
 */
 
-const recipesThatOnlyTake60minutesOrLess = null;
-
+const recipesThatOnlyTake60minutesOrLess = recipes.filter((recipe) => {
+  const DurationWithin60min = recipe.duration <= 60
+  return (DurationWithin60min)
+});
+console.log('Less than 61min :', recipesThatOnlyTake60minutesOrLess);
 const allRecipesWithMoreThan2Servings = null;
 
 const allRecipesWithTitlesLongerThan12Characters = null;
@@ -85,7 +82,7 @@ export {
   onlyTitles,
   titlesWithDuration,
   timePerServing,
-  allTitlesInOneString,
+  // allTitlesInOneString,
   recipesThatOnlyTake60minutesOrLess,
   allRecipesWithMoreThan2Servings,
   allRecipesWithTitlesLongerThan12Characters,
