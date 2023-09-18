@@ -74,9 +74,16 @@ const recipesThatOnlyTake60minutesOrLess = recipes.filter((recipe) => {
   return (DurationWithin60min)
 });
 console.log('Less than 61min :', recipesThatOnlyTake60minutesOrLess);
-const allRecipesWithMoreThan2Servings = null;
 
-const allRecipesWithTitlesLongerThan12Characters = null;
+const allRecipesWithMoreThan2Servings = recipes.filter((recipe) => {
+  return(recipe.servings > 2)
+});
+console.log('For more than Two', allRecipesWithMoreThan2Servings);
+
+const allRecipesWithTitlesLongerThan12Characters = recipes.filter((recipe) => {
+  return ( recipe.title.length > 12)
+});
+console.log( allRecipesWithTitlesLongerThan12Characters);
 
 export {
   onlyTitles,
