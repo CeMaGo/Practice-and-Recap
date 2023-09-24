@@ -1,14 +1,7 @@
 import createCard from "./components/card/card.js";
 import createNavButton from "./components/nav-button/nav-button.js";
 import createPagination from "./components/nav-pagination/nav-pagination.js";
- import createSearchBar from "./components/search-bar/search-bar.js";
-
-const cardContainer = document.querySelector('[data-js="card-container"]');
-const searchBarContainer = document.querySelector(
-  '[data-js="search-bar-container"]'
-);
-
-const navigation = document.querySelector('[data-js="navigation"]');
+import createSearchBar from "./components/search-bar/search-bar.js";
 
 // States
 let maxPage = 42;
@@ -19,14 +12,14 @@ let searchQuery = "";
 const prevButton = createNavButton("prev", () => {
   if (page <= 1) return;
   page--;
-  fetchCharacter()
+  fetchCharacters();
 });
 
 const nextButton = createNavButton("next", () => {
   if (page >= maxPage) return;
   page++;
-  fetchCharacter()
-})
+  fetchCharacters();
+});
 
 const pagination = createPagination();
 
@@ -34,22 +27,22 @@ const searchBar = createSearchBar((event) => {
   event.preventDefault();
   searchQuery = event.target.elements.query.value;
   page = 1;
-  fetchCharacter()
+  fetchCharacters();
 });
 
-navigation.append(prevButton, pagination,nextButton);
+navigation.append(prevButton, pagination, nextButton);
 searchBarContainer.append(searchBar);
 
-fetchCharacter()
+fetchCharacters();
 
-async function fetchCharacter(){
-  const result = await fetch(`https://rickandmortyapi.com/api/character/?page=${page}&name=${searchQuery}`
+async function fetchCharacters() {
+  const result = await fetch(
+    `https://rickandmortyapi.com/api/character/?page=${page}&name=${searchQuery}`
   );
-const data = await result.json();
-maxPage = data.info.pages;
-const characters = data.results;
-pagination.textContent = `${page}/${maxPage}`;
-cardContainer.innerHTML = ""
-characters.map(createCard).forEach((card)=> cardContainer.append(card))
-console.log("data:",data);
-};
+  const data = await result.json();
+  maxPage = data.info.pages;
+  const characters = data.results;
+  pagination.textContent = `${page} / ${maxPage}`;
+  cardContainer.innerHTML = "";
+  characters.map(createCard).forEach((card) => cardContainer.append(card));
+}
