@@ -180,3 +180,41 @@ const dogsAndCats = [...dogs, ...cats]
 const catBetweenBirds = ["bird", ...cats, "bird"];
 // catsBetweenBirds -> ['bird', 'cat', 'cat', 'cat', 'bird']
 
+//? Here is how the spread syntax works with object declarations: 
+
+const circle = { radius: 5, shape: "circle" };
+
+const greenCircle = { ...circle, color: "green"};
+//greenCircle -> { radius: 5, shape: 'circle', color: 'green'}
+
+//? Notice that the order os the spread operation matters because you override properties:
+
+//* const circle = { radius: 5, shape: "circle"};
+
+//* lagerCircle = { ...circle, radius: 20};
+// largerCircle -> { radius: 20, shape: 'circle'}
+
+//* notALargeCircle = { radius: 20, ...circle };
+// notALargeCircle -> { radius: 5, shape: 'Circle' }
+
+//? The spread syntax is very helpful for creating a shallow copy of array and objects:
+
+//* const book = {title: "Ulysses", author: " James Joyce" };
+//* const shallowCopyOfBook = { ...book };
+//* shallowCopyOfBook.year = "1920"
+
+// book -> { title: 'Ulysses', author: 'James Joyce'};
+// shallowCopyOfBook -> { title: 'Ulysses', author: 'James Joyce', year: '1920'};
+
+//* const greekLetters = ["alpha", "beta", "gamma", "delta", "epsilon", "zeta"];
+//* const sortedGreekLetters = [..greekLetters].sort((a,b) => a.localCompare(b));
+// this is an alternative to greekLetters.slice() which also creates a shallow copy
+
+// greekLetters -> ['alpha', 'beta', 'gamma', 'epsilon', 'zeta'];
+// sortedGreekLetters -> ['alpha', 'beta', 'delta', 'epsilon', 'gamma', 'zeta']
+
+//? You can also use the spread syntax when calling functions:
+
+//* const numbers = [4534, 3411, 2455, 4952];
+//* const smallestNumber = Math.min(...numbers);
+// smallestNumber = 2455
