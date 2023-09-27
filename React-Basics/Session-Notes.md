@@ -201,9 +201,120 @@ in our applictaion.
 >
 >**Note** _Exporting the component_ and _Nesting and organiying components_ are out of scope for this first session.
 
-## Imperative vs. Declarative Programminf
+## Imperative vs. Declarative Programming
 
 The main difference between imperative and declarative code is that imperative code describes _how_
 something should be built, and declarative code describes _what needs to be built.
 
+>💡 Imagine building a stool. Imperative "code" would describe the steps you need to take to build
+> the stool. Declarative "code" would describe the stool itself
+>
+> Imperative:
+>
+> - take 4 wooden slats
+> - take 1 wooden board
+> - take 4 screws
+> - take a screwdriver
+> - screw the slats under the board perpendicularly
+> - position your work so that the board is on top
+>
+> Declarative:
+>
+> - a stoll with 4 legs and a seat, stading upright
 
+In imperatibe programming, you code performs a series of actions.
+in declarative programming, you code describes a desired outcome.
+
+The way we have used JavaScript during this course so far has been mostly imperative. We have
+descirbed what needs to be done to get a certain result.
+
+```js
+const p = document.createElemenet("p");
+p.classList.add("introText");
+p.textContent = "Hello World!";.
+rootElement.append(p);
+```
+
+Now, React allows us to use JavaScript in a declarative waz. We describe to React what we want, and
+React figures out how to update the DOM according to our description.
+
+```js
+root.render(<p className="introText">Hello World!</p>);
+// React could interpret this to do the following:
+// const p = document.createElement("p");
+// p.classList.add("introText");
+// p.textContent = "Hello World!";
+// rootElement.append(p);
+// -
+```
+
+##How React Renders
+
+React needs to now where to render the elements it creates. We select the DOM element we want to
+render into by using `document.querySelector()`. We the create a React root object. The root object
+has a `render()` method that we can use to render React elements into the DOM.
+
+**HTML**
+
+```html
+<div id="root"></div>
+```
+
+**JavaScript**
+
+```js
+const rootElement = document.querySelector("#root");
+const root = ReactDOM.createRoot(rootElement);
+root.render(<h1>Hello, world</h1>);
+```
+
+you'll probably never have to write this code yourself, because it is already included in all
+templates and starters. In real world it usually looks like this:
+
+```js
+const rootElement = document.getElementById("root");
+const root = ReactDOM.createRoot();
+
+root.render(
+  <React.StrictMode>
+   <App />
+  </React.StrictMood>
+);
+```
+
+Here we have an imported `<App />` element that is wrapped in `<React.StrictMode>`.
+
+> 💡 `StrictMode` sets up React to run in strict mood. IN strcit mood React points out potential
+> pronlems in an application.
+
+### React works smart, not hard
+
+React only updates the DOM elements that have changed compared to the lst render. This is very
+efficient and provides a great user experience (focus stays consistent, inputs keep their values,
+etc.) as well as a greate developer experience (declarative code is much easier to reason about).
+
+## Nice to know> React, JSX, transpilers and Bundlers
+
+Since JSX is not a standard JavaScript syntax, we need to use a [transpiler](https://babeljs.io/) (a tool that translates one variant of language into another) to transform it into standard JavaScript, that can be understood by the browser.
+
+A[bundler](https://webpack.js.org/) is a tool taht comnines all the files of our codebase into one file, that we can include in our HTML. The bundler also takes care of running the transpiller when needed.
+
+The bundler creates a development server when we run `npm run start` locally. CodeSandBix does this
+for us automatically.
+
+> 💡 You might notice that in the challenges we are using an `import` statement to import `.css` files. This is not a standarrd JavaScript feature, but itis supported by the bunder. A css statemnet is transformed into a `<link>` element in HTML automatically.
+> 
+>```js
+> import "./styles.css";
+>```
+
+---
+
+##Resources
+
+- [What is React: A Visual Introduction For Beginners on learnreact.design](https://learnreact.design/posts/what-is-react)
+- [Writing Markup with JSX in the React Docs](https://beta.reactjs.org/learn/writing-markup-with-jsx)
+- [JavaScript in JSX with Curly Braces in the React Docs](https://beta.reactjs.org/learn/javascript-in-jsx-with-curly-braces)
+- [Your First Component in the React Docs](https://beta.reactjs.org/learn/your-first-component)
+- [Difference between a Framework and a Library on freecodecamp](https://www.freecodecamp.org/news/the-difference-between-a-framework-and-a-library-bd133054023f/)
+- 
