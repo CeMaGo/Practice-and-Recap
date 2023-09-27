@@ -7,8 +7,8 @@
   - [ ] `git pull`
 - [ ] understand why and how git conflicts happen
 - [ ] know ow to combine branches :
- - [ ] `git merge`
- - [ ] `git rebase` / `git pull --rebase`
+  - [ ] `git merge`
+ -  [ ] `git rebase` / `git pull --rebase`
 - [ ] know how to resolve git conflicts
 
 ---
@@ -32,7 +32,7 @@ If there are any differeneces,
 
 ### `git merge`
 
-To join two branchees together, you can use `git merge`.
+To join two branches together, you can use `git merge`.
 
 Make sure to 
 
