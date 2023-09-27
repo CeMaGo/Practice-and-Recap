@@ -162,3 +162,25 @@ conflict:
 
 ##### Option 2: `git rebase`
 
+Instead of `git merge`, you can usse `git rebase` to solve conflict:
+
+- go to feature branch
+- use `git rebase main`
+- resolve merge conflcits step-by-step
+ ([as mentioned above] (git-advanced.md#how-to-solve-conflicts-in-vscode))
+- use `git rebase --continue` to continue (will open an editor fro the merge commit message)
+ > 💡 Most likely you're in vim To save and clone the editor type `:wq` and press `Enter`
+- `git push --force-with-lease` (protects the remote branch is differebt from local branch)
+
+#### Solving the Conflict Remote on GitHub
+
+Instead of solving a conflict locally, zou can 
+[use the GitHub conflict manager](httpS://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-on-github).
+
+---
+
+## Resources
+
+- [Git Handbook](https://git-scm.com/docs)
+- [Visualizing Git] (https://git-school.github.io./visualiying-git/#upstream-changes)
+- [Git Emergency Help: ohshitgit.com](https://ohshitgit.com/)
