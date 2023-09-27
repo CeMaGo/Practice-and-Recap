@@ -3,15 +3,15 @@
 ## Learning Objectives
 
 - [ ] deepen understanding of git in general
- - [ ] `git fetch`
- - [ ] `git pull`
-- [ ] understand whz and how git conflicts happen
+  - [ ] `git fetch`
+  - [ ] `git pull`
+- [ ] understand why and how git conflicts happen
 - [ ] know ow to combine branches :
  - [ ] `git merge`
  - [ ] `git rebase` / `git pull --rebase`
 - [ ] know how to resolve git conflicts
 
---
+---
 
 ## Understanding Advanced Git Commands
 
@@ -182,5 +182,5 @@ Instead of solving a conflict locally, zou can
 ## Resources
 
 - [Git Handbook](https://git-scm.com/docs)
-- [Visualizing Git] (https://git-school.github.io./visualiying-git/#upstream-changes)
+- [Visualizing Git](https://git-school.github.io./visualiying-git/#upstream-changes)
 - [Git Emergency Help: ohshitgit.com](https://ohshitgit.com/)
