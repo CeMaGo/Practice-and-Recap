@@ -218,3 +218,101 @@ const greenCircle = { ...circle, color: "green"};
 //* const numbers = [4534, 3411, 2455, 4952];
 //* const smallestNumber = Math.min(...numbers);
 // smallestNumber = 2455
+
+//! Optional Chaining
+
+//? The optional chaining operator ?. is like chaining operator . , except that instead of throwing
+//? an error is a reference is nullish (null or undefined), the expression 'short-circuits' with a value of
+//? undefined. This is useful when you're not sure if a property, method or index exists or if
+//? something is callable.  
+
+function feedCats(cats) {
+    return cats.forEach((cat)=> console.log(cat, "says meow");)
+}
+
+feedCats(["Garfield", "Tom", "Grumpy Cat"]);
+// logs:
+// Garfield says meow
+// Tom says meow
+// Grumpy Cat says meow
+
+feedCats();
+// throws:
+// Uncaught TypeError : Cannot read properties of undefined ( reading 'forEach')
+
+function feedCats(cats) {
+    return cats?.forEach((cat) => console.log(cat, "says meooow"));
+}
+
+feedCats();
+// logs nothing, but also doesn't throw an Error
+
+//? The ?. short-circuits the expression and evaluates the return statement to undefined. This way 
+//? the error is avoided without the need to explicitly use if statements or ternaries to check the values.
+
+//? Optional chaining is useful when targeting a property in an object with a deeply nested structure.
+
+const person = {
+    name: "Sam",
+    skills: [
+        {
+            name: "HTML",
+            level: 9999,
+            category: {
+                name: "coding",
+            },
+        },
+        {
+            name: "Agile",
+            level: 1337,
+            category: {
+                name: "projects",
+            },
+        },
+    ],
+};
+
+console.log(person.skills[1].category.name);
+// log: projects
+
+console.log(person.skills[2].level);
+// throws: Uncaught TypError: Cannot read properties of undefined (reading 'level')
+
+console.log(person.skills?.[2]?.level);
+//logs: undefined
+
+console.log(person.skills[0].partner.name);
+// throws: Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+
+console.log(person.skills[0].partner?.name);
+// logs: undefined
+
+//! Nullish Coalescing
+
+//? The nullish coalescing operator ?? is a logical operator that returns its right-hand side operand
+//? when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.
+
+const chocolate = true;
+
+function chocolateCheck() {
+    return chocolate ?? "No chocolate :( ";
+}
+
+const result = chocolateCheck();
+
+//? In this example, our function would return 'No Chocolate :( ', seeing as how the value of
+//? chocolate is undefined. The same would happen is we declare this variable chocolate with 
+//? the value null.
+
+//? Written as acd n if/else statement, the code would look like this:
+
+//* const chocolate = true;
+
+//* function chocolateCheck() {
+//*    if (chocolate === null || chocolate === undefined) {
+//*     return "no chocolate :( "
+//*    }
+//*   return true; 
+//* }
+
+//* const result = chocolateCheck();
