@@ -11,13 +11,15 @@ export default function App() {
 
 function Button({ color, disabled, text }){
   return (
-         <button 
+    <button 
+    onClick={() => console.log('You clicked the Button!')}
             style={{backgroundColor:color,
                     padding:'10px 20px' ,
                     border: 'none',
                     borderRadius: '5px',
                     cursor: disabled ? 'not allowed' : 'pointer'}}
-            disabled={disabled}>
+            disabled={disabled}
+            >
         {text}
     </button>
   )
