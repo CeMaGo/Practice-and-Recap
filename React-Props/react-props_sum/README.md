@@ -2,8 +2,6 @@
 
 In this exercise, you will pass two props to a component and and use them to calculate the sum.
 
-## Task
-
 Look at the `./src/App.js` file: the `App` component returns a default heading element which you need to replace with a custom component. Your task is to write a `Sum` component which calculates the sum of its two props and renders the result.
 
 You can use the following hints as guideline:
