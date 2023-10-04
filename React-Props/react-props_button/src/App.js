@@ -9,10 +9,13 @@ export default function App() {
         ></Button>;
 }
 
+
 function Button({ color, disabled, text }){
+ function handleClick() {return  alert('You clicked the Button!')}
+
   return (
     <button 
-    onClick={() => console.log('You clicked the Button!')}
+            onClick={handleClick}
             style={{backgroundColor:color,
                     padding:'10px 20px' ,
                     border: 'none',
