@@ -7,6 +7,6 @@ export default function App() {
 
 function Sum({valueA, valueB}) {
   return (
-  <div>`{valueA} + {valueB} = {valueA + valueB}</div>
+  <div>{valueA} + {valueB} = {valueA + valueB}</div>
   )
 }
