@@ -10,17 +10,15 @@ export default function App() {
 }
 
 function Button({ color, disabled, text }){
-  const buttonStyle= {
-    backgroundColor:color,
-    padding:'10px 20px',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: disabled ? 'not allowed' : 'pointer'
-  }
   return (
-    <button style={buttonStyle}
-    disabled={disabled}>
-    {text}
+         <button 
+            style={{backgroundColor:color,
+                    padding:'10px 20px' ,
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: disabled ? 'not allowed' : 'pointer'}}
+            disabled={disabled}>
+        {text}
     </button>
   )
 }
