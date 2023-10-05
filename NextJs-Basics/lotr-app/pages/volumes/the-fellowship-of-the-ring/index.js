@@ -1,5 +1,6 @@
 import { volumes } from "@/resources/lib/data";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function TheFellowshipOfTheRingsPage() {
   const fellowshipVolume = volumes.find(({slug})=> slug === "the-fellowship-of-the-ring"
@@ -22,12 +23,18 @@ export default function TheFellowshipOfTheRingsPage() {
       <h1>{fellowshipVolume.title}</h1>
       <p>{fellowshipVolume.description}</p>
       <ul>
-      <li>List with book.ordinal and book.title</li>
-      {/* {fellowshipVolume.books?.map(({book}) */}
-      {/* =>    */}
-     {/* ( <li key={book.ordinal} >{book.title}</li>))} */}
-      </ul>
-    <Link href="/volumes" > ⬅ All Volumes</Link>
+  {fellowshipVolume.books?.map((book) => (
+    <li key={book.ordinal}>{book.title}</li>
+  ))}
+</ul>
+
+      <Image 
+      src={`/public/${fellowshipVolume.title}.png`}
+      width={140} 
+      height={230}
+
+      />
+    <Link href="/volumes"> ⬅ All Volumes</Link>
     </div>
   );
 }
