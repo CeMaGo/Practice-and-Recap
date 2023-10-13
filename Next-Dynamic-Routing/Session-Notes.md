@@ -16,11 +16,11 @@
 
   Using dynamic routes you can turn ( parts of ) the path into dynamic parameters using square brackets []. If the URL matches the path , Next.js will make the dynamiv parameters available using the `useRouter` hook.
 
-  ![Dynamic Routing](./assets/dynamic-routes.excalidraw.png)
+  > [Dynamic Routing](./assets/dynamic-routes.excalidraw.png)
 
 ## Implementing Dynamic Routes
 
-To create a dynamic route, you can add square brackets around file or folder names in the pages dircetory respectively: `pages/movies/[catergorySlug]/page/[pageNumber].js`.
+To create a dynamic route, you can add square brackets around file or folder names in the pages directory respectively: `pages/movies/[categorySlug]/page/[pageNumber].js`.
 
 The following paths map to this example:
 
@@ -34,7 +34,7 @@ The following paths map to this example:
   - `categorySlug` is `comedy`
   - `pageNumber` is `3`
 
-To access the query parameters in a component use the `useRouter` hook imported from `next/roueter`;
+To access the query parameters in a component use the `useRouter` hook imported from `next/router`;
 
 ```js
 //pages/movies/categories/[categorySlug]/page/[pageNumber].js
@@ -53,7 +53,7 @@ export default function CategoryPage() {
 }
 ```
 
-This of course also applies to a simpler example with a single dynamic query parameter. 
+This of course also applies to a simpler example with a single dynamic query parameter
 
 ```js
 // pages/movies/[slug].js
@@ -150,3 +150,18 @@ export default function Movies() {
 - [Linking to dynamic paths in the Next.js Docs](https://nextjs.org/docs/routing/introduction#linking-to-dynamic-paths)
 - [Routing Imperatively in the Next.js Docs](https://nextjs.org/docs/routing/imperatively)
 - [next/head in the Next.js Docs](https://nextjs.org/docs/api-reference/next/head)
+
+
+# Challenges: Next.js Dynamic Routes
+
+## Lord of the Rings App: Dynamic routes
+
+> 💡 If you are far enough along with your own Lord of the Rings App, follow the
+> [instructions of this challenge](https://github.com/spicedacademy/fs-web-exercises/tree/main/sessions/nextjs-dynamic-routes/lotr-app-dynamic-routes#readme)
+> using your own code.
+
+Solve this challenge by running this command in your Terminal:
+
+```
+npx ghcd@latest spicedacademy/fs-web-exercises/tree/main/sessions/nextjs-dynamic-routes/lotr-app-dynamic-routes
+```
