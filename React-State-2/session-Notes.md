@@ -214,3 +214,28 @@ function Counter() {
 
 ## React Hooks
 
+The `useState` function is part of a borarder set of features that give components extra powers.
+
+Hooks are functions that allow components  functions to hook into React features (like state) and
+allow components to do more that a traditional JavaScript  function can. The follow the naming
+convention `useXyz`
+
+Common hokks that you'll come across are `useState` and useEffect`.
+
+When using hooks you need to follow a few rules:
+
+- Only call hooks at the top level. Don't call Hooks inside loops, conditions, or nested functions.
+- Only call hooks from React function components or custom hooks. Don't call Hooks from regular
+- JavaScript functions.
+
+> 📙 Read more about [**Hooks** in the React Docs](http://beta.reactjs.org/docs/hookd-overview.html)
+> from when they were introduced to React.
+
+---
+
+## Resources
+
+- [Sharing State Between Components in the React Docs](httpd://beta.reactjs.org/learn/sharing-state-between-compronents)
+- [Updating state based on the previous state in the React Docs](https://beta.reactjs.org/api/react/useState#updating-state-based-on-the-previous-state)
+- [I've update the state, but logging gives me the old value int the React Docs](https://beta.reactjs.org/apis/react/useState#ive-updated-the-state-but-logging-give-me-the-old-value)
+- [Hooks at a Glance in the React Docs](https://beta.reactjs.org/docs/hooks-oveerview.html)
