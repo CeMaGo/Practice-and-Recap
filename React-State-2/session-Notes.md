@@ -96,4 +96,146 @@ In this example the input is not manually controlled by React: The input is an
 
 ### Using Controlled Inputs
 
-We can use React to control the value of an input element.
+We can use React to control the value of an input element. This is called a "cotrolled input". This
+means that we manually set the value attribute of the input element. We can wire up a state variable
+to the value attribute of the input element. This way the input element will always have the same value as the state variable. Combine with the `onChange`  event handler we can update the state
+variable when the user types in the input field.
+
+```js 
+function SearchForm() {
+    const [searchTerm, setSearchTerm] = useState("");
+
+    function handleSubmit () {
+        event.preventDefault();
+        consol.log("A new search term was submitted:", searchTerm);
+        }
+        return (
+            <form onSubmit={handleSubmit}>
+            label htmlFor="searchTerm">Search</label>
+            <input
+            name="searchTerm"
+            id="searchTerm"
+            value={searchTerm}
+            onChange={(event) => setSearhTerm(event.target.value)}
+            />
+            <button>Search for {searchTerm}</button>
+            </form>
+        );
+    }
+```
+
+In this example you always know the value of the search term input. Since it is a state variable,
+zou can use it in other places in your application. You should prefer using uncontrolled inputs
+when possible, but sometimes you need to use a controlled input.
+
+Ypu might need a controlled input when
+
+- showing search results while the user is typing,
+- auto-completing the user's input or 
+- validating the user's input.
+
+## State Updates are not Immediate! 
+
+WHen we call the setter function of a state variable, React will not immediately update the state
+variable. Instead, it will update it's internal value and schedule a re-render of the component.
+
+```js
+// ⚠ This code is broken!
+function Counter() {
+    const [count, setCount] = useState(0); // count is 0 initially
+
+    function handleIncrement () {
+        //ehen this is first called, count is still 0
+        console.log(count); // -> 0
+
+        // this will set react internal state to 1,
+        // but does not update the count variable
+        setCount(count + 1);
+        console.log(count); // -> 0
+
+        // since setter functions were called
+        // react will schedule a re-render of
+        // the components with the new count value of 1
+    }
+    return (
+        <>
+        <p>Count: {count}</p>
+        <button onClick={handleIncrement by 2}></button>
+        </>
+    );
+}
+```
+
+This behavior can be unexpected, but it is important to understabd that state variables are not immediately updated.
+
+There are a few ways to fix the code above. In example we could call `setCount{count +2}` and
+be done. If for some reason we need to call `setCount` twice, we can use the functional form of the setter function, which provides the current internal value of the state variable as an argument.
+
+```js 
+// ⚠️ this code is unnecessary complicated but it works!
+function Counter() {
+    const [count, setCount] = useState(0); // count is initially 0
+
+    function handleIncrement() {
+        // When this is first called count is still 0
+        console.log(count) // -> 0
+
+        // this will set reacts internal state to 1.
+        // but does not update the count variable
+        setCount((preCount) => prevCount +1);
+        console.log(count) // => 0
+        
+        // the internal value of xount is 1,
+        // we get as the first parameter of the function we pass to the setter.
+        // 1 + 1 is 2, so react;s internal state will now be _2_
+        console.log(count) // -> 0
+
+        // since setter function were calles 
+        // react will schedule a re-render of
+        // the component with the new count values of _2_
+}
+       return (
+        <>
+        <p>Count: {count}</p>
+        <button onClick={handleIncrement}> Increment by 2 </button>
+       );
+}
+```
+
+> 💡 Here the prefix `prev` is useed to indicate that the value is the previous value of the state
+> variable. Another common convention is to use the just first letter of the state variable as
+> the parameter `setCount(c => c + 1)`.
+>
+> 📙 Read more about 
+> [**Update state based on the previous state**](https://beta.reactjs.org/api.react/useState#updateing-state-based-on-the-previous-state)
+> and
+> [**I've updated the state, but logging gives me the old value**](https://beta.reactjs.org/api/react/useState#ive-updated-the-state-but-logging-gives-me-the-old-value)
+> in the React Docs.
+
+## React Hooks
+
+The `useState` function is part of a borarder set of features that give components extra powers.
+
+Hooks are functions that allow components  functions to hook into React features (like state) and
+allow components to do more that a traditional JavaScript  function can. The follow the naming
+convention `useXyz`
+
+Common hokks that you'll come across are `useState` and useEffect`.
+
+When using hooks you need to follow a few rules:
+
+- Only call hooks at the top level. Don't call Hooks inside loops, conditions, or nested functions.
+- Only call hooks from React function components or custom hooks. Don't call Hooks from regular
+- JavaScript functions.
+
+> 📙 Read more about [**Hooks** in the React Docs](http://beta.reactjs.org/docs/hookd-overview.html)
+> from when they were introduced to React.
+
+---
+
+## Resources
+
+- [Sharing State Between Components in the React Docs](httpd://beta.reactjs.org/learn/sharing-state-between-compronents)
+- [Updating state based on the previous state in the React Docs](https://beta.reactjs.org/api/react/useState#updating-state-based-on-the-previous-state)
+- [I've update the state, but logging gives me the old value int the React Docs](https://beta.reactjs.org/apis/react/useState#ive-updated-the-state-but-logging-give-me-the-old-value)
+- [Hooks at a Glance in the React Docs](https://beta.reactjs.org/docs/hooks-oveerview.html)
