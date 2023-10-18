@@ -214,7 +214,7 @@ To sort an array of objects, you can use `sort` on a _copy of the array_ with a 
 The compare function returns a number, which is used to determine the oder of the elements.
 
 ```js
-const [trees, setTrees] = useState([
+const [trees, setTrees] = useState([git
     {id: 0, name: "Oak", height: 7.5}
     { id: 1, name: "Beech", height: 6}
     { id: 2, name: "Pine", height: 10}
@@ -227,7 +227,110 @@ function handleSortTreesByHeight() {
 
 > 📙 Read more about [**Updating objects inside Arrays** in the React Docs](https:///beta.reactjs.org/lear/updating-arrays-in-state#updating-objects-inside-arrays).
 
-## Choosing Related State
+## Choosing the State Structure
+
+There are some common pitfalls when choosing your state structure.
+
+### Group Related State
 
 If you have state that belongs (and updates) together, group it into a single object. This makes it easier to update the state.
 
+```js
+// ❌ MEH
+const [userName, setUserName] = useState("Alex");
+const [useAge, setUseAge] = useState(28);
+
+// ✅ Better
+const [user, setUser] = useState({ name:"ALex", age:28});
+```
+
+### Avoid Redundant State
+
+If you have a value that is derived from state, you should avoid storing it in state. Instead just use a normal varaible.
+
+The problem with redundant state is that it can get out of sync with the source of truth if you forget to update it correctly.
+
+```js
+// ❌ BAD
+const [user, setUser] = useState({name: "ALex", age:28 });
+const [is Adult, setIsAdult] = useState(user.age >= 18);
+
+// ✅ GOOD
+const [user, SetUser] = useState({ name:"Alex", age: 28}),
+const isAdult = user.age >= 18;
+```
+
+### Avoid Duplication in state
+
+Avoid storing the same value is multiple places in state. This can lead to bugs and make it harder to update the state.
+
+```js
+// ❌ BAD
+const[trees, setTrees] = useState([
+    { id: 0, name: "Oak", height: 7.5}
+    { id: 1, name: "Beech", height: 6}
+    { id: 2, name: "Pine", height: 10}
+]);
+
+const [ selectedTree, setSelectedTree] = useState( tress.find((tree) => tree.id === 0));
+
+// Somewhere in Code:
+setSelectedTree(trees.find((tree) => tree.id === 2));
+
+// ✅  GOOD
+const[trees, setTrees] = useState([
+    { id: 0, name: "Oak", height: 7.5}
+    { id: 1, name: "Beech", height: 6}
+    { id: 2, name: "Pine", height: 10}
+]);
+
+const [selectedTreeId, setSelectedTreeID] = useState(0)
+
+const selectedTree = trees.find((tree) => tree.id === selectedTreeId);
+
+//Somewhere in Code
+setSelectedTreeId(2);
+```
+
+### Avoid Having Dublicate Lists in State
+
+If you have a list of items in state, you should avoid storing a derived version of it in a different state variable. This is a common mistake when you want to display a filtered version of the list.
+
+```js
+// ❌ BAD
+const [trees, setTrees] = useState([
+  { id: 0, name: "Oak", height 7.5},
+  { id: 1, name: "Beech", height 6},
+  { id: 2, name: "Pine", height 10}
+  ]);
+
+
+const [filteredTree, setFilteredTree] = useState( trees.filter((tree) => tree.height > 7));
+
+// Somewhere in Code:
+steFilterTrees(trees.filer((tree) => tree.height > 9));
+
+// ✅ GOOD
+const [trees, setTrees] = useState([
+  { id: 0, name: "Oak", height 7.5},
+  { id: 1, name: "Beech", height 6},
+  { id: 2, name: "Pine", height 10}
+  ]);
+
+  const [minHeight, setMinHeight] = useState(7);
+
+  const filteredTree = trees.filter((tree) => tree.height > minHeight);
+
+  //Somewhere over the RainCode:
+  setMinHeight(9);
+  ```
+
+
+> 📙 Read more about [**Choosing the State Structure** in the React Docs](https://beta.reactjs.org/learn/choosing-the-state-structure). The Docs have many more examples and explanations.
+
+---
+
+## Resources
+
+- [Updating Objects in State (React Docs Beta)](https://beta.reactjs.org/learn/updating-objects-in-state)
+- [Updating Arrays in State (React Docs Beta)](https://beta.reactjs.org/learn/updating-arrays-in-state)
