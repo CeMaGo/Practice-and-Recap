@@ -4,7 +4,7 @@ import "./styles.css";
 export default function App() {
   return (
     <main>
-      <Button > Text </Button>
+      <Button> Text </Button>
       <Button> Of </Button>
       <Button> My </Button>
       <Button> Choice </Button>
