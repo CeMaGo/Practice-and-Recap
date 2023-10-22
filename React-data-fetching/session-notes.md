@@ -130,3 +130,132 @@ const fetcher = async (url) => {
 };
 ```
 
+This function throws an error with the leys `info` and `status` if the status code of the response is not in the range  of 200-299.
+
+> 💡 The advanced `fetcher` above  uses two concepts we have not covered:
+> [the `new` operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new)
+> and 
+> [the `throw` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw).
+> These are advanced JS features we don;t need to go into detail by now, but diving into it will
+> give you a better understanding of JS as a programming language.
+> 📙 Read more about [Status Code and Error Object](https://swr.vercel.app/doc/error-handeling#status-code-and-error-object).
+
+ You can use the `error` object to display a more detailed error message ('message' is the string from `new Error()`);
+
+```js 
+function Character() {
+    const { data, error, isLoading } = useSWR("https://swapi.dev/api/people/1");
+
+    if (error) return <div>{error.message}</div>;
+    if (isLoading) return <div>loading...</div>;
+
+    //render data
+    return <div> Hello{data.name}!</div>;
+}
+```
+
+### Fetching on Interval and Button Click
+
+To refetch the API on Interval, pass a `refreshInterval` value inside of an object as an additional
+argument to the `useSWR` hook:. In the following example, `SWR` will refetch the API every second:
+
+```js
+useSWR("https://swapi.dev/api/people/1", { refreshInterval: 1000 });
+```
+
+> 📙 Read more about
+> [Revalidate on Interval](https://swr.vercel.app/docs/revalidation#revalidate-on-interval).
+
+To fetch data programmatically (like clicking a button), you can use the `mutate` function provided
+by the `useSWR` hook.
+
+```js
+function Character() {
+    const { data, mutate } = useSWR("https://swapi.dev/api/people/1");
+
+    return <RefetchButton onRefetch={() => mutate()}>
+            Refetch data
+            </RefetchButton>;
+}
+
+function RefetchButton ( {children, onRefetch }) {
+    return (
+        <button type="button" onClick={onRefetch}>
+        {children}
+        </button>
+    );
+}
+```
+
+### Data is Cached
+
+`SWR` will cache the fetched data in the browser's memory. This means that if you fetch the same
+data twice, the second time it will be loaded from the cache instead of the network. This means that you can use the `useSWR` hook multiple times in your app without
+having to worry about fetching the same data multiple times.
+
+```js
+function CharacterName() {
+    const {data } = useSWR("https://swapi.dev/api/people/1");
+    return <div> Hello {data.name}!</div>; // Hello Luke SKywalker
+}
+function CharacterHairColor() {
+    const {data } = useSWR("https://swapi.dev/api/people/1");
+    return <div> His hair color {data.hair_color}!</div>; // His Hair color is blond
+}
+function CharacterHeight() {
+    const {data } = useSWR("https://swapi.dev/api/people/1");
+    return <div> He is  {data.height}cm tall!</div>; // He is 172 cm tall.
+}
+
+function App() {
+    return (
+        <>
+        <CharacterName/>>
+        <CharacterHairColor/>
+        <CharacterHeight/>
+        </>
+    );
+}
+```
+
+Thi sapplictaion will fetch the date only once, even tough teh `useSWR` hook is used three time.
+
+Additionally, if you were to manually `mutate` the data (triggering a revalidation), the cach would be updated and the data would be available to all components using the `useSWR` hook with the same key (URL).
+
+This is true even if you were to call `mutate` from yet another component, as long as it has the same key (URL):
+
+```js
+function RevalidateButton() {
+  const { mutate } = useSWR("https://swapi.dev/api/people/1");
+  return (
+    <button type="button" onClick={() => mutate()}>
+      Revalidate
+    </button>
+  );
+}
+
+// … other components
+
+function App() {
+  return (
+    <>
+      <CharacterName />
+      <CharacterHairColor />
+      <CharacterHeight />
+      <RevalidateButton />
+    </>
+  );
+}
+```
+
+### SWR Response API
+
+The `useSWR` hook returns an SWR response object with the following properties:
+
+| response property | description                                            |
+| ----------------: | ------------------------------------------------------ |
+|            `data` | The data fetched for the given key (URL)               |
+|           `error` | An error object if the fetcher function threw an error |
+|       `isLoading` | `true` if the data is being loaded for the first time  |
+|    `isValidating` | `true` if there is any request or revalidation loading |
+|        `mutate()` | A function to mutate the data                          |
