@@ -218,7 +218,7 @@ function App() {
 }
 ```
 
-Thi sapplictaion will fetch the date only once, even tough teh `useSWR` hook is used three time.
+This application will fetch the date only once, even tough teh `useSWR` hook is used three time.
 
 Additionally, if you were to manually `mutate` the data (triggering a revalidation), the cach would be updated and the data would be available to all components using the `useSWR` hook with the same key (URL).
 
@@ -259,3 +259,95 @@ The `useSWR` hook returns an SWR response object with the following properties:
 |       `isLoading` | `true` if the data is being loaded for the first time  |
 |    `isValidating` | `true` if there is any request or revalidation loading |
 |        `mutate()` | A function to mutate the data                          |
+
+
+## Combine Fetched Data with local State
+
+With SWR you don't control the state container the fetched data yourself. Because of this you can\t modifu the state directly. This is a **good thing** because modifying state that has been fetched from a server is anti-pattern. If your sever gives you data it has to be the single source of truth.
+
+If you want enrich server data with local state (like attaching an `isFavorite` property to a movie) you can use the `useSWR` hook to fetch the data and the `useState` should be connected to the server data via a unique identifier (like `id` or `slug`).
+
+
+```js
+function Movies() {
+  /* let's assume the API return a list of movies like this:
+    [
+      {
+        id: 1,
+        title: "Star Wars",
+        year: 1977,
+      },
+      {
+        id: 2,
+        title: "The Empire Strikes Back",
+        year: 1980,
+      }
+    ]
+  */
+  const { data: moviesData } = useSWR("/api/movies");
+
+  // initialize the local state with an empty array
+  const [moviesInfo, setMoviesInfo] = useState([]);
+
+  function handleToggleFavorite(id) {
+    setMoviesInfo((moviesInfo) => {
+      // find the movie in the state
+      const info = moviesInfo.find((info) => info.id === id);
+
+      // if the movie is already in the state, toggle the isFavorite property
+      if (info) {
+        return moviesInfo.map((info) =>
+          info.id === id ? { ...info, isFavorite: !info.isFavorite } : info
+        );
+      }
+
+      // if the movie is not in the state, add it with isFavorite set to true
+      return [...moviesInfo, { id, isFavorite: true }];
+    });
+  }
+
+  return (
+    <ul>
+      {moviesData.map(({ id, title, year }) => {
+        // find the movie in the state and destructure the isFavorite property
+        // if it is not in the state, default isFavorite to false
+        const { isFavorite } = moviesInfo.find((info) => info.id === id) ?? {
+          isFavorite: false,
+        };
+
+        return (
+          <li key={id}>
+            {title} ({year})
+            <button type="button" onClick={handleToggleFavorite(id)}>
+              {isFavorite ? "Remove from favorites" : "Add to favorites"}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+```
+
+If you use Immer and `useImmer` you can simplify the update code a bit:
+
+```js
+function handleToggleFavorite(if) {
+    updateMoviesInfo((draft) => {
+        // find the movie in the state
+        const info = draft.find((info) => info.id === id);
+
+    // find the movie in the state, toggle the isFavorite property
+    draft.push({ id, isFavorite: true });
+    }
+)
+}
+```
+
+> 💡 When using this pattern you are relying on your local state being created ad-hoc. Therefor your local array will return `undefined` on `find` if the movie is not in the state. This is why we use the `??` operator to default to `{ isFavorite: false }` if the movie is not in the state.
+
+---
+
+## Resources
+
+- [SWR Docs](https://swr.vercel.app/docs/getting/started)
