@@ -16,3 +16,6 @@ Prime Gaminghireconor: console.log(array(16).join('=]' -1) + ' Batman!')
 anjana.dev/professional-javascript
 
 mdn is your friend
+
+
+HSL() look up on mdn!
