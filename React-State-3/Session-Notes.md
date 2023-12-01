@@ -90,7 +90,7 @@ function handlePrependNumber(number) {
 handlePrependNumber( -1 );
 ```
 
-### Removing from an Arraz
+### Removing from an Array
 
 To remove an element from an array, you can use the `filter` method:
 
