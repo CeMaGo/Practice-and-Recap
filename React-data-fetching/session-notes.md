@@ -45,7 +45,7 @@ function Character() {
 }
 ```
 
-> 💡 Note the `useSWR` returns an Object from whcih you destructure `data`. This is why zou cannot 
+> 💡 Note the `useSWR` returns an Object from whcih you destructure `data`. This is why you cannot 
 > simply call the `data` object as you like, but have to rename it according to destructuring rules:
 > `{data: person }`. 📙 Read more avout
 > [Getting Started in the docs](https:..swr.vercel.app/docs/getting-started).

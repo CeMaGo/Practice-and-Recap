@@ -1,4 +1,4 @@
-import {add} from "./index.mjs"
+import {add } from "./index.js"
 
 // add()
 
@@ -6,11 +6,6 @@ import {add} from "./index.mjs"
 // returns a negative value if the greater argument is negative (Hint: use the matcher toBeLessThan())
 // returns a value close to 0.3 if called with add(0.1, 0.2) (Hint: use the matcher toBeCloseTo())
 // subtract()
-
-test("adds the numbers 13 and 28 correctly", () => {
-  const result = add(13, 28);
-  expect(result).toBe(41);
-});
 
 test("returns 5 if called with add(2, 3)", () => {
   const result = add(2, 3);

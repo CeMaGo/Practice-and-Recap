@@ -12,7 +12,7 @@ npx ghcd@latest spicedacademy/fe-web-exercises/tree/main/sessions/react-state-3/
 
 Solve this challenge by running this command in your Terminal:
 
-```npx ghcd@latest spicedacademy/fs/web/exercises/tree/main/session/react-state-3/tags
+```npx ghcd@latest spicedacademy/fs-web-exercises/tree/main/sessions/react-state-3/tags
 ```
 
 ### Journal App with Form Submit
