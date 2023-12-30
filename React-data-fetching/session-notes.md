@@ -1,4 +1,4 @@
-# React Data Fetching
+****# React Data Fetching
 
 ## Learning Objectives
 
@@ -138,7 +138,7 @@ This function throws an error with the leys `info` and `status` if the status co
 > [the `throw` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw).
 > These are advanced JS features we don;t need to go into detail by now, but diving into it will
 > give you a better understanding of JS as a programming language.
-> 📙 Read more about [Status Code and Error Object](https://swr.vercel.app/doc/error-handeling#status-code-and-error-object).
+> 📙 Read more about [Status Code and Error Object](https://swr.vercel.app/doc/error-handeling#status-code-and-error-object).     
 
  You can use the `error` object to display a more detailed error message ('message' is the string from `new Error()`);
 
