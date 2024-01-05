@@ -145,4 +145,46 @@ INstead of tweaking absolute positioning and fiddling with all that math yoursel
 
 In addition, transforms give you capabilities you might not otherwise have. Not only can you translate elements in 2D space, but you can transform in three dimensions,skew and rotate, and so forth. Paul Irish has a [in-depth analysis of the benefits of `translate()`]("https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/") (2012) from a performance point of view. In general, however, you have the same benefits you get from using CSS animations: you use an easily extensible way of positioning elements -- something tha needs a lot od extra code if simulate translation `top` and `left` positioning. Another bonus is that this is just like working in a canvas element.
 
-> 
+> 💡 Note: You may need to attach a `translateZ(0.1)` transform if you wish to get hardware accelerate on your CSS animations, depending on platform. As noted above, this can improve performance. When overused, it can have memory consumptions issues. What you do in this regard is up to ypu -- do something testing and finding out what's best for your particular app.
+
+
+### Use `requestAnimationFrame()` instead of `setInterval()`
+
+Calls to `setInterval()` run code at a presumed frame rate that may or may not be possible under current circumstances. it tells the browser to render even while the browser isn't actually drawing; that is, the video hardware hasn't reached the next display cycle. This water processor time and can even lead to reduced battery life on the user's device.
+
+Instead, you should try to use `window.requestAnimationFrame()`. This waits until the browser is actually ready to start building the next frame of your animation, and won't bother if the hardware isn't going to actually draw anything. Another benefit of this API is that animations won't run while your app isn't visible on the screen (such as if it's in the background and some other task is operating.) This will save battery life and prevent users from cursing your name in the night sky.
+
+### Make events immediate
+
+As old-school, accessibility-aware Web-developers we love click events since they also support keyboard input. On mobile devices, these are too slow. You should use `touchstart` and touched instead. The reason is that these don't have a delay that makes the interaction with the app appear sluggish. If test for touch support first, you don't sacrifice accessibility, either. For example, the Financial Times uses a library called [fastclick]("https://github.com/ftlabs/fastclick") for that purpose, which is available for you to use.
+
+### Keep your interface simple
+
+One big performance issue we found in HTML apps was that moving lots of DOM elements around makes everything sluggish -- especially when they feature lots of gradients and dop shadows. It helps a lot to simplify your look-and-feel and move a proxy element around when you drag and drop.
+
+WHen, dor example, you have a long list of elements (let's say tweets), don't move  them all. Instead, keep in your DOM tree only the ones that are visible and a few on either side of the currently visible set of tweets. HIde or remove the rest.
+Keeping the data in a JavaScript object instead of accessing the DOM can vastly improve your apps performance. Think of the display as a presentation of your data rather than the data itself. That doesn't mean you can't use straight HTML as the source; just rea it once and then scroll 10 elements, changing the content od the first last accordingly to your position in the results list, instead of moving 100 elements that aren't visible. The same trick applies in games to sprites: if they aren't currently on the screen, there is no need to poll them. Instead, re-use elements that scroll off-screen as new ones coming in.
+
+## General application performance analysis
+
+Firefox, Chrome, and other browsers include built-in tools that can help you diagnose slow page rendering. In particular, [Firefox's Network Monito]('https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/index.html') will display a precise timeline of when each network request on your page happens, how large it is, and how long it takes.
+
+If your page contains JavaScript code that is taking a long time to run, the JavaScript will pinpoint the slowest lines of code: `<image/>`
+
+The [Build't-in Gecko Profiler]("https://firefox-source-docs.mozilla.org/tools/profiler/index.html") is a very useful tool that provides even more detailed information about which parts of the browser code are running slowly while the profile runs. This is a bit more complex to use, but provides a lot of useful details.
+
+`<image/>`
+
+> 💡 NOte: you can use these tools with the Android browser by running Firefox and enabling [about:debugging]("https://firefox-source-docs.mozilla.org/devtools-user/about_colon_debugging/index.html")
+
+In particular, making dozens of hundreds of network requests takes longer in mobile browsers. Rendering large Images and SS gradients can also take longer. Downloading large files can take longer, even over a fast network, because mobile hardware is sometimes too slow too slow to kae advantage of all available bandwidth. For useful general tips on mobile Web performance, have a look at Maximiliano Firtman's [Mobile Web High Performance]("https://www.slideshare.net/firt/mobile-web-high-performance") talk.
+
+### Test cases and submitting bugs
+
+If the Firefox and Chrome developer tools don't help  you find a problem, or if they seem to indicate that the Web browser has caused the problem, try to provide a  reduced test case that maximally isolate the problem. That ofte helps i diagnosing problems.
+
+See if you can reproduce the problem by saving and loading a static copy of an HTML page (including any images/stylesheets/scripts it embeds). If so, edit the static files to remove any private information, then send them to otherd for help (sumbit a [Bugzilla]("https://bugzilla.mozilla.org/") report, for example, or host it on a server and share the URL).
+
+ You should also share any profiling information you've collected using the tools listed above.
+
+ 
